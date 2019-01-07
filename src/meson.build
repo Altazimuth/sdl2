@@ -1,9 +1,10 @@
 all_sources += files(
-  'SDL_error.c',
-  'SDL_assert.c',
   'SDL.c',
-  'SDL_log.c',
+  'SDL_assert.c',
+  'SDL_dataqueue.c',
+  'SDL_error.c',
   'SDL_hints.c',
+  'SDL_log.c',
 )
 
 subdir('atomic')
