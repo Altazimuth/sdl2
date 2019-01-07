@@ -1,7 +1,5 @@
 all_sources += files(
-  'SDL_systhread.c',
-  'SDL_syscond.c',
-  'SDL_systls.c',
-  'SDL_syssem.c',
-  'SDL_sysmutex.c',
+  'SDL_syscond.cpp',
+  'SDL_sysmutex.cpp',
+  'SDL_systhread.cpp',
 )
