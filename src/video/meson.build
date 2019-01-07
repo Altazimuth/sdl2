@@ -26,16 +26,16 @@ if host_machine.system() == 'windows'
   subdir('windows')
 elif host_machine.system() == 'darwin'
   subdir('cocoa')
+elif host_machine.system() == 'haiku'
+  subdir('haiku')
 elif x11_dep.found()
   subdir('x11')
 else
   error('Unknown platform.')
 endif
 #subdir('android')
-#subdir('cocoa')
 #subdir('directfb')
 subdir('dummy')
-#subdir('haiku')
 #subdir('mir')
 #subdir('pandora')
 #subdir('psp')

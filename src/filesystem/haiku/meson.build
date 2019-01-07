@@ -1,3 +1,1 @@
-all_sources += files(
-  'SDL_sysfilesystem.cc',
-)
+all_sources += files('SDL_sysfilesystem.cc')

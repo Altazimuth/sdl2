@@ -1,3 +1,1 @@
-main_sources += files(
-  'SDL_BeApp.cc',
-)
+main_sources += files('SDL_BeApp.cc')

@@ -1,3 +1,1 @@
-all_sources += files(
-  'SDL_androidsensor.c',
-)
+all_sources += files('SDL_androidsensor.c')

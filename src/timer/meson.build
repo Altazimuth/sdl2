@@ -4,10 +4,11 @@ all_sources += files(
 
 if host_machine.system() == 'windows'
   subdir('windows')
+elif host_machine.system() == 'haiku'
+  subdir('haiku')
 else
   subdir('unix')
 endif
 #subdir('dummy')
-#subdir('haiku')
 #subdir('psp')
 

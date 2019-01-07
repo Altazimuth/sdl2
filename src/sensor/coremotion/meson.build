@@ -1,3 +1,1 @@
-all_sources += files(
-  'SDL_coremotionsensor.m',
-)
+all_sources += files('SDL_coremotionsensor.m')

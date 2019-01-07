@@ -1,3 +1,1 @@
-all_sources += files(
-  'SDL_systimer.c',
-)
+all_sources += files('SDL_systimer.c')
