@@ -27,3 +27,4 @@ subdir('test')
 subdir('thread')
 subdir('timer')
 subdir('video')
+subdir('video/yuv2rgb') # This is what's done in the CMakeLists.txt
