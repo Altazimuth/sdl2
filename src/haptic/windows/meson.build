@@ -1,3 +1,4 @@
 all_sources += files(
-  'SDL_syshaptic.c',
+  'SDL_xinputhaptic.c',
+  'SDL_dinputhaptic.c',
 )
