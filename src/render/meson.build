@@ -1,8 +1,7 @@
 all_sources += files(
+  'SDL_render.c',
   'SDL_yuv_sw.c',
   'SDL_d3dmath.c',
-  'SDL_yuv_mmx.c',
-  'SDL_render.c',
 )
 
 subdir('direct3d')
