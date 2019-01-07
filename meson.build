@@ -24,27 +24,39 @@ endif
 cc = meson.get_compiler('c')
 cdata = configuration_data()
 check_headers = [
-  ['HAVE_ALLOCA_H',     'alloca.h'    ],
-  ['HAVE_SYS_TYPES_H',  'sys/types.h' ],
-  ['HAVE_STDIO_H',      'stdio.h'     ],
-  ['HAVE_STDLIB_H',     'stdlib.h'    ],
-  ['HAVE_STDARG_H',     'stdarg.h'    ],
-  ['HAVE_MALLOC_H',     'malloc.h'    ],
-  ['HAVE_MEMORY_H',     'memory.h'    ],
-  ['HAVE_STRING_H',     'string.h'    ],
-  ['HAVE_STRINGS_H',    'strings.h'   ],
-  ['HAVE_INTTYPES_H',   'inttypes.h'  ],
-  ['HAVE_STDINT_H',     'stdint.h'    ],
-  ['HAVE_CTYPE_H',      'ctype.h'     ],
-  ['HAVE_MATH_H',       'math.h'      ],
-  ['HAVE_ICONV_H',      'iconv.h'     ],
-  ['HAVE_SIGNAL_H',     'signal.h'    ],
-  ['HAVE_ALTIVEC_H',    'altivec.h'   ],
-  ['HAVE_PTHREAD_NP_H', 'pthread/np.h'],
-  ['HAVE_LIBUDEV_H',    'libudev.h'   ],
-  ['HAVE_DBUS_DBUS_H',  'dbus/dbus.h' ],
-  ['HAVE_STDARG_H',     'stdarg.h'    ],
-  ['HAVE_STDDEF_H',     'stddef.h'    ],
+  ['HAVE_IMMINTRIN_H',      'immintrin'       ],
+  ['HAVE_SYS_TYPES_H',      'sys/types.h'     ],
+  ['HAVE_STDIO_H',          'stdio.h'         ],
+  ['HAVE_STDLIB_H',         'stdlib.h'        ],
+  ['HAVE_STDDEF_H',         'stddef.h'        ],
+  ['HAVE_STDARG_H',         'stdarg.h'        ],
+  ['HAVE_MALLOC_H',         'malloc.h'        ],
+  ['HAVE_MEMORY_H',         'memory.h'        ],
+  ['HAVE_STRING_H',         'string.h'        ],
+  ['HAVE_LIMITS_H',         'limits.h'        ],
+  ['HAVE_STRINGS_H',        'strings.h'       ],
+  ['HAVE_WCHAR_H',          'wchar.h'         ],
+  ['HAVE_INTTYPES_H',       'inttypes.h'      ],
+  ['HAVE_STDINT_H',         'stdint.h'        ],
+  ['HAVE_CTYPE_H',          'ctype.h'         ],
+  ['HAVE_MATH_H',           'math.h'          ],
+  ['HAVE_ICONV_H',          'iconv.h'         ],
+  ['HAVE_SIGNAL_H',         'signal.h'        ],
+  ['HAVE_LIBUNWIND_H',      'libunwind.h'     ],
+  ['HAVE_ALLOCA_H',         'alloca.h'        ],
+  ['HAVE_LIBUDEV_H',        'libudev.h'       ],
+  ['HAVE_FCITX_FRONTEND_H', 'fcitx/frontend.h'],
+  ['HAVE_LINUX_VERSION_H',  'linux/version.h' ],
+  ['HAVE_XINPUT_H',         'xinput.h'        ],
+  ['HAVE_D3D_H',            'd3d9.h'          ],
+  ['HAVE_D3D11_H',          'd3d11_1.h'       ],
+  ['HAVE_DDRAW_H',          'ddraw.h'         ],
+  ['HAVE_DSOUND_H',         'dsound.h'        ],
+  ['HAVE_DINPUT_H',         'dinput.h'        ],
+  ['HAVE_DXGI_H',           'dxgi.h'          ],
+  ['HAVE_MMDEVICEAPI_H',    'mmdeviceapi.h'   ],
+  ['HAVE_AUDIOCLIENT_H',    'audioclient.h'   ],
+  ['HAVE_ENDPOINTVOLUME_H', 'endpointvolume.h'],
 ]
 
 foreach h : check_headers
@@ -200,19 +212,19 @@ elif host_machine.system() == 'windows'
 #  core_args += '
   core_ldflags += ['winmm.lib', 'version.lib', 'imm32.lib']
 elif host_machine.system() == 'darwin'
-  cdata.set('HAVE_GCC_ATOMICS', 1)
+  cdata.set('HAVE_GCC_ATOMICS',                1)
   cdata.set('HAVE_GCC_SYNC_LOCK_TEST_AND_SET', 1)
-  cdata.set('SDL_POWER_MACOSX', 1)
-  cdata.set('SDL_THREAD_PTHREAD', 1)
-  cdata.set('SDL_JOYSTICK_IOKIT', 1)
-  cdata.set('SDL_HAPTIC_IOKIT', 1)
-  cdata.set('SDL_TIMER_UNIX', 1)
-  cdata.set('SDL_FILESYSTEM_UNIX', 1)
-  cdata.set('SDL_DYNAMIC_API', 1)
-  cdata.set('SDL_LOADSO_DLOPEN', 1)
-  cdata.set('SDL_VIDEO_DRIVER_COCOA', 1)
-  cdata.set('SDL_AUDIO_DRIVER_COREAUDIO', 1)
-  cdata.set('SDL_VIDEO_OPENGL_CGL', 1)
+  cdata.set('SDL_POWER_MACOSX',                1)
+  cdata.set('SDL_THREAD_PTHREAD',              1)
+  cdata.set('SDL_JOYSTICK_IOKIT',              1)
+  cdata.set('SDL_HAPTIC_IOKIT',                1)
+  cdata.set('SDL_TIMER_UNIX',                  1)
+  cdata.set('SDL_FILESYSTEM_UNIX',             1)
+  cdata.set('SDL_DYNAMIC_API',                 1)
+  cdata.set('SDL_LOADSO_DLOPEN',               1)
+  cdata.set('SDL_VIDEO_DRIVER_COCOA',          1)
+  cdata.set('SDL_AUDIO_DRIVER_COREAUDIO',      1)
+  cdata.set('SDL_VIDEO_OPENGL_CGL',            1)
   core_args += ['-pthread']
   core_deps += [dependency('appleframeworks',
     modules : ['CoreFoundation', 'Foundation',
