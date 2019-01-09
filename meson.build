@@ -195,6 +195,7 @@ if host_machine.system() == 'linux'
   cdata.set('SDL_VIDEO_DRIVER_X11_XINPUT2',                     1)
   cdata.set('SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH', 1)
   cdata.set('SDL_VIDEO_DRIVER_X11_SUPPORTS_GENERIC_EVENTS',     1)
+  cdata.set('SDL_SENSOR_DUMMY',                                 1)
   core_args += ['-pthread']
 elif host_machine.system() == 'windows'
   cdata.set('SDL_THREAD_WINDOWS',       1)
@@ -209,6 +210,7 @@ elif host_machine.system() == 'windows'
   cdata.set('SDL_VIDEO_DRIVER_WINDOWS', 1)
   cdata.set('SDL_VIDEO_RENDER_D3D',     1)
   cdata.set('SDL_AUDIO_DRIVER_WINMM',   1)
+  cdata.set('SDL_SENSOR_DUMMY',         1)
   core_deps += [
     cc.find_library('winmm'),
     cc.find_library('version'),
@@ -228,6 +230,7 @@ elif host_machine.system() == 'darwin'
   cdata.set('SDL_VIDEO_DRIVER_COCOA',          1)
   cdata.set('SDL_AUDIO_DRIVER_COREAUDIO',      1)
   cdata.set('SDL_VIDEO_OPENGL_CGL',            1)
+  cdata.set('SDL_SENSOR_DUMMY',                1)
   core_args += ['-pthread']
   core_deps += [dependency('appleframeworks',
     modules : ['CoreFoundation', 'Foundation',

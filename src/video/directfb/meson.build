@@ -9,5 +9,4 @@ all_sources += files(
   'SDL_DirectFB_video.c',
   'SDL_DirectFB_window.c',
   'SDL_DirectFB_WM.c',
-  
 )
