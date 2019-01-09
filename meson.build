@@ -72,7 +72,7 @@ stdc_headers = [
 ]
 
 cdata.set('STDC_HEADERS', 1)
-foreach h : check_headers
+foreach h : stdc_headers
   if not cc.has_header(h)
     cdata.set('STDC_HEADERS', 0)
   endif
