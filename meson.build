@@ -226,6 +226,8 @@ if host_machine.system() == 'linux'
   cdata.set('SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH', 1)
   cdata.set('SDL_VIDEO_DRIVER_X11_SUPPORTS_GENERIC_EVENTS',     1)
   cdata.set('SDL_SENSOR_DUMMY',                                 1)
+  cdata.set('SDL_VIDEO_VULKAN',                                 1)
+  # HAVE_VIDEO_VULKAN is set to TRUE in the CMake, but is never used
   core_args += ['-pthread']
 elif host_machine.system() == 'windows'
   cdata.set('SDL_THREAD_WINDOWS',       1)
@@ -241,6 +243,7 @@ elif host_machine.system() == 'windows'
   cdata.set('SDL_VIDEO_RENDER_D3D',     1)
   cdata.set('SDL_AUDIO_DRIVER_WINMM',   1)
   cdata.set('SDL_SENSOR_DUMMY',         1)
+  cdata.set('SDL_VIDEO_VULKAN',         1)
   core_deps += [
     cc.find_library('winmm'),
     cc.find_library('version'),
@@ -261,6 +264,7 @@ elif host_machine.system() == 'darwin'
   cdata.set('SDL_AUDIO_DRIVER_COREAUDIO',      1)
   cdata.set('SDL_VIDEO_OPENGL_CGL',            1)
   cdata.set('SDL_SENSOR_DUMMY',                1)
+  cdata.set('SDL_VIDEO_VULKAN',                0) # TODO: Implement Metal support (this relies on it)
   core_args += ['-pthread']
   core_deps += [dependency('appleframeworks',
     modules : ['CoreFoundation', 'Foundation',
@@ -280,6 +284,7 @@ x11_dep      = dependency('x11',      required : false)
 xi_dep       = dependency('xi',       required : false)
 xext_dep     = dependency('xext',     required : false)
 gl_dep       = dependency('gl',       required : false)
+vulkan_dep   = dependency('vulkan',   required : false)
 xrandr_dep   = dependency('xrandr',   required : false)
 xinerama_dep = dependency('xinerama', required : false)
 
@@ -319,7 +324,7 @@ configure_file(
 subdir('src')
 core_deps += [
   x11_dep, xi_dep, xrandr_dep, xext_dep,
-  gl_dep, xinerama_dep, alsa_dep,
+  gl_dep, vulkan_dep, xinerama_dep, alsa_dep,
 ]
 
 sdl2 = library('sdl2',
