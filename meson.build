@@ -65,26 +65,13 @@ foreach h : check_headers
   endif
 endforeach
 
-
-stdc_headers = [
-  'dlfcn.h', 'stdint.h', 'stddef.h', 'inttypes.h',
-  'stdlib.h', 'strings.h', 'string.h', 'float.h',
-]
-
-cdata.set('STDC_HEADERS', 1)
-foreach h : stdc_headers
-  if not cc.has_header(h)
-    cdata.set('STDC_HEADERS', 0)
-  endif
-endforeach
-
 check_functions = [
   ['HAVE_MALLOC',       'malloc',      '#include<stdlib.h>' ],
   ['HAVE_CALLOC',       'calloc',      '#include<stdlib.h>' ],
   ['HAVE_REALLOC',      'realloc',     '#include<stdlib.h>' ],
   ['HAVE_FREE',         'free',        '#include<stdlib.h>' ],
   ['HAVE_ALLOCA',       'alloca',      '#include<alloca.h>' ],
-  ['HAVE_GETENV',       'setenv',      '#include<stdlib.h>' ],
+  ['HAVE_GETENV',       'getenv',      '#include<stdlib.h>' ],
   ['HAVE_SETENV',       'setenv',      '#include<stdlib.h>' ],
   ['HAVE_PUTENV',       'putenv',      '#include<stdlib.h>' ],
   ['HAVE_UNSETENV',     'unsetenv',    '#include<stdlib.h>' ],
@@ -95,10 +82,13 @@ check_functions = [
   ['HAVE_MEMCPY',       'memcpy',      '#include<string.h>' ],
   ['HAVE_MEMMOVE',      'memmove',     '#include<string.h>' ],
   ['HAVE_MEMCMP',       'memcmp',      '#include<string.h>' ],
+  ['HAVE_WCSLEN',       'wcslen',      '#include<wchar.h>'  ],
+  ['HAVE_WCSLCPY',      'wcslcpy',     '#include<wchar.h>'  ],
+  ['HAVE_WCSLCAT',      'wcslcat',     '#include<wchar.h>'  ],
+  ['HAVE_WCSCMP',       'wcscmp',      '#include<wchar.h>'  ],
   ['HAVE_STRLEN',       'strlen',      '#include<string.h>' ],
   ['HAVE_STRLCPY',      'strlcpy',     '#include<string.h>' ],
   ['HAVE_STRLCAT',      'strlcat',     '#include<string.h>' ],
-  ['HAVE_STRDUP',       'strdup',      '#include<string.h>' ],
   ['HAVE__STRREV',      '_strrev',     '#include<string.h>' ],
   ['HAVE__STRUPR',      '_strupr',     '#include<string.h>' ],
   ['HAVE__STRLWR',      '_strlwr',     '#include<string.h>' ],
@@ -128,22 +118,43 @@ check_functions = [
   ['HAVE_STRNCASECMP',  'strncasecmp', '#include<strings.h>'],
   ['HAVE_VSSCANF',      'vsscanf',     '#include<stdio.h>'  ],
   ['HAVE_VSNPRINTF',    'vsnprintf',   '#include<stdio.h>'  ],
-  ['HAVE_ATAN',         'atan',        '#include<math.h>'   ],
-  ['HAVE_ATAN2',        'atan2',       '#include<math.h>'   ],
   ['HAVE_ACOS',         'acos',        '#include<math.h>'   ],
+  ['HAVE_ACOSF',        'acosf',       '#include<math.h>'   ],
   ['HAVE_ASIN',         'asin',        '#include<math.h>'   ],
+  ['HAVE_ASINF',        'asinf',       '#include<math.h>'   ],
+  ['HAVE_ATAN',         'atan',        '#include<math.h>'   ],
+  ['HAVE_ATANF',        'atanf',       '#include<math.h>'   ],
+  ['HAVE_ATAN2',        'atan2',       '#include<math.h>'   ],
+  ['HAVE_ATAN2F',       'atan2f',      '#include<math.h>'   ],
   ['HAVE_CEIL',         'ceil',        '#include<math.h>'   ],
+  ['HAVE_CEILF',        'ceilf',       '#include<math.h>'   ],
   ['HAVE_COPYSIGN',     'copysign',    '#include<math.h>'   ],
+  ['HAVE_COPYSIGNF',    'copysignf',   '#include<math.h>'   ],
   ['HAVE_COS',          'cos',         '#include<math.h>'   ],
   ['HAVE_COSF',         'cosf',        '#include<math.h>'   ],
+  ['HAVE_EXP',          'exp',         '#include<math.h>'   ],
+  ['HAVE_EXPF',         'expf',        '#include<math.h>'   ],
   ['HAVE_FABS',         'fabs',        '#include<math.h>'   ],
+  ['HAVE_FABSF',        'fabsf',       '#include<math.h>'   ],
   ['HAVE_FLOOR',        'floor',       '#include<math.h>'   ],
+  ['HAVE_FLOORF',       'floorf',      '#include<math.h>'   ],
+  ['HAVE_FMOD',         'fmod',        '#include<math.h>'   ],
+  ['HAVE_FMODF',        'fmodf',       '#include<math.h>'   ],
   ['HAVE_LOG',          'log',         '#include<math.h>'   ],
+  ['HAVE_LOGF',         'logf',        '#include<math.h>'   ],
+  ['HAVE_LOG10',        'log10',       '#include<math.h>'   ],
+  ['HAVE_LOG10F',       'log10f',      '#include<math.h>'   ],
   ['HAVE_POW',          'pow',         '#include<math.h>'   ],
+  ['HAVE_POWF',         'powf',        '#include<math.h>'   ],
   ['HAVE_SCALBN',       'scalbn',      '#include<math.h>'   ],
+  ['HAVE_SCALBNF',      'scalbnf',     '#include<math.h>'   ],
   ['HAVE_SIN',          'sin',         '#include<math.h>'   ],
   ['HAVE_SINF',         'sinf',        '#include<math.h>'   ],
   ['HAVE_SQRT',         'sqrt',        '#include<math.h>'   ],
+  ['HAVE_SQRTF',        'sqrtf',       '#include<math.h>'   ],
+  ['HAVE_TAN',          'tan',         '#include<math.h>'   ],
+  ['HAVE_TANF',         'tanf',        '#include<math.h>'   ],
+  ['HAVE_FOPEN64',      'fopen64',     '#include<stdio.h>'  ],
   ['HAVE_FSEEKO',       'fseeko',      '#include<stdio.h>'  ],
   ['HAVE_FSEEKO64',     'fseeko64',    '#include<stdio.h>'  ],
   ['HAVE_SIGACTION',    'sigaction',   '#include<signal.h>' ],
@@ -159,6 +170,8 @@ check_functions = [
   ['HAVE_PTHREAD_SETNAME_NP',  'pthread_setname_np',  '#include<pthread.h>'],
   ['HAVE_PTHREAD_SET_NAME_NP', 'pthread_set_name_np', '#include<pthread.h>'],
 # check token HAVE_SEM_TIMEDWAIT
+  ['HAVE_GETAUXVAL', 'getauxval', '#include<sys/auxv.h>'],
+  ['HAVE_POLL',      'poll',      '#include<poll.h>'    ],
 ]
 
 foreach f : check_functions
@@ -168,10 +181,27 @@ foreach f : check_functions
 endforeach
 
 cdata.set('HAVE_LIBC', 1)
+# TODO: Something with _USE_MATH_DEFINES
 if cc.compiles('''#include<math.h>
 double dummy = M_PI
 ''', name : 'M_PI')
   cdata.set('HAVE_M_PI', 1)
+endif
+
+# FIXME: Supposed to be windows and not MinGW but I dunno how to achieve that in Meson
+if host_machine.system() == 'windows' and cc.get_id() == 'msvc'
+  cdata.set('STDC_HEADERS', 1)
+else
+  stdc_headers = [
+    'dlfcn.h', 'stdint.h', 'stddef.h', 'inttypes.h',
+    'stdlib.h', 'strings.h', 'string.h', 'float.h',
+  ]
+  cdata.set('STDC_HEADERS', 1)
+  foreach h : stdc_headers
+    if not cc.has_header(h)
+      cdata.set('STDC_HEADERS', 0)
+    endif
+  endforeach
 endif
 
 core_args = ['-DUSING_GENERATED_CONFIG_H']
