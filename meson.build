@@ -243,6 +243,7 @@ elif host_machine.system() == 'windows'
   cdata.set('SDL_VIDEO_RENDER_D3D',     1)
   cdata.set('SDL_AUDIO_DRIVER_WINMM',   1)
   cdata.set('SDL_SENSOR_DUMMY',         1)
+  cdata.set('SDL_VIDEO_OPENGL_WGL',     1)
   cdata.set('SDL_VIDEO_VULKAN',         1)
   core_deps += [
     cc.find_library('winmm'),
@@ -300,7 +301,9 @@ xrandr_dep   = dependency('xrandr',   required : false)
 xinerama_dep = dependency('xinerama', required : false)
 
 if gl_dep.found()
-  cdata.set('SDL_VIDEO_RENDER_OGL', 1)
+  cdata.set('SDL_VIDEO_OPENGL',     1   )
+  cdata.set('SDL_VIDEO_RENDER_OGL', 1   )
+  cdata.set('HAVE_VIDEO_OPENGL',    true)
 endif
 
 if x11_dep.found()
