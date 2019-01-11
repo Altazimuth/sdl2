@@ -181,14 +181,14 @@ foreach f : check_functions
 endforeach
 
 cdata.set('HAVE_LIBC', 1)
-# TODO: Something with _USE_MATH_DEFINES
+# TODO: Something with _USE_MATH_DEFINES on Windows (and not MinGW)
 if cc.compiles('''#include<math.h>
 double dummy = M_PI
 ''', name : 'M_PI')
   cdata.set('HAVE_M_PI', 1)
 endif
 
-# FIXME: Supposed to be windows and not MinGW but I dunno how to achieve that in Meson
+# FIXME: Supposed to be Windows and not MinGW but I dunno how to achieve that in Meson
 if host_machine.system() == 'windows' and cc.get_id() == 'msvc'
   cdata.set('STDC_HEADERS', 1)
 else
@@ -264,13 +264,24 @@ elif host_machine.system() == 'darwin'
   cdata.set('SDL_AUDIO_DRIVER_COREAUDIO',      1)
   cdata.set('SDL_VIDEO_OPENGL_CGL',            1)
   cdata.set('SDL_SENSOR_DUMMY',                1)
-  cdata.set('SDL_VIDEO_VULKAN',                0) # TODO: Implement Metal support (this relies on it)
   core_args += ['-pthread']
-  core_deps += [dependency('appleframeworks',
-    modules : ['CoreFoundation', 'Foundation',
-     'QuartzCore', 'CoreAudio',
-    'AudioUnit', 'AudioToolbox', 'ForceFeedback',
-    'IOKit', 'Cocoa', 'Carbon', 'CoreGraphics'])]
+  core_deps += [dependency('AppleFrameworks',
+    modules : [
+      'CoreFoundation', 'Foundation',
+      'QuartzCore', 'CoreAudio',
+      'AudioUnit', 'AudioToolbox', 'ForceFeedback',
+      'IOKit', 'Cocoa', 'Carbon', 'CoreGraphics'
+    ])]
+
+    metal_dep = dependency('AppleFrameworks', modules : ['Metal'], required : false)
+    if metal_dep.found()
+      cdata.set('SDL_VIDEO_RENDER_METAL', 1)
+      cdata.set('SDL_VIDEO_VULKAN',       1)
+    else
+      cdata.set('SDL_VIDEO_RENDER_METAL', 0)
+      cdata.set('SDL_VIDEO_VULKAN',       0)
+    endif
+  core_deps += metal_dep
 else
   error('Unsupported platform.')
 endif
