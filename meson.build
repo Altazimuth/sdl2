@@ -266,13 +266,16 @@ elif host_machine.system() == 'darwin'
   cdata.set('SDL_VIDEO_OPENGL_CGL',            1)
   cdata.set('SDL_SENSOR_DUMMY',                1)
   core_args += ['-pthread']
-  core_deps += [dependency('AppleFrameworks',
-    modules : [
-      'CoreFoundation', 'Foundation',
-      'QuartzCore', 'CoreAudio',
-      'AudioUnit', 'AudioToolbox', 'ForceFeedback',
-      'IOKit', 'Cocoa', 'Carbon', 'CoreGraphics'
-    ])]
+  core_deps += [
+    dependency('AppleFrameworks',
+      modules : [
+        'CoreFoundation', 'Foundation', 'QuartzCore',
+        'CoreAudio', 'AudioUnit', 'AudioToolbox',
+        'ForceFeedback', 'IOKit', 'Cocoa', 'Carbon',
+        'CoreGraphics'
+      ]
+    )
+  ]
 
     metal_dep = dependency('AppleFrameworks', modules : ['Metal'], required : false)
     if metal_dep.found()
@@ -352,15 +355,15 @@ sdl2 = library('sdl2',
 sdl2main = static_library('sdl2main',
   main_sources,
   include_directories : core_inc,
-  c_args : core_args,
+  c_args              : core_args,
 )
 
 sdl2_dep = declare_dependency(
-  link_with : sdl2,
+  link_with           : sdl2,
   include_directories : core_inc
 )
 sdl2main_dep = declare_dependency(
-  link_with : sdl2main,
+  link_with           : sdl2main,
   include_directories : core_inc
 )
 
