@@ -267,24 +267,27 @@ elif host_machine.system() == 'darwin'
   cdata.set('SDL_SENSOR_DUMMY',                1)
   core_args += ['-pthread']
   core_deps += [
-    dependency('AppleFrameworks',
-      modules : [
-        'CoreFoundation', 'Foundation', 'QuartzCore',
-        'CoreAudio', 'AudioUnit', 'AudioToolbox',
-        'ForceFeedback', 'IOKit', 'Cocoa', 'Carbon',
-        'CoreGraphics'
-      ]
-    )
+    dependency('CoreFoundation', method : 'extraframework'),
+    dependency('Foundation',     method : 'extraframework'),
+    dependency('QuartzCore',     method : 'extraframework'),
+    dependency('CoreAudio',      method : 'extraframework'),
+    dependency('AudioUnit',      method : 'extraframework'),
+    dependency('AudioToolbox',   method : 'extraframework'),
+    dependency('ForceFeedback',  method : 'extraframework'),
+    dependency('IOKit',          method : 'extraframework'),
+    dependency('Cocoa',          method : 'extraframework'),
+    dependency('Carbon',         method : 'extraframework'),
+    dependency('CoreGraphics',   method : 'extraframework'),
   ]
 
-    metal_dep = dependency('AppleFrameworks', modules : ['Metal'], required : false)
-    if metal_dep.found()
-      cdata.set('SDL_VIDEO_RENDER_METAL', 1)
-      cdata.set('SDL_VIDEO_VULKAN',       1)
-    else
-      cdata.set('SDL_VIDEO_RENDER_METAL', 0)
-      cdata.set('SDL_VIDEO_VULKAN',       0)
-    endif
+  metal_dep = dependency('Metal', method : 'extraframework', required : false)
+  if metal_dep.found()
+    cdata.set('SDL_VIDEO_RENDER_METAL', 1)
+    cdata.set('SDL_VIDEO_VULKAN',       1)
+  else
+    cdata.set('SDL_VIDEO_RENDER_METAL', 0)
+    cdata.set('SDL_VIDEO_VULKAN',       0)
+  endif
   core_deps += metal_dep
 else
   error('Unsupported platform.')
