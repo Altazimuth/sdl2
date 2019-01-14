@@ -14,7 +14,7 @@ cc = meson.get_compiler('c')
 core_deps = [
   cc.find_library('m',       required : false),
   cc.find_library('dl',      required : false),
-  cc.find_library('threads', required : false),
+  dependency('threads', required : false),
 ]
 
 if host_machine.system() == 'darwin'
