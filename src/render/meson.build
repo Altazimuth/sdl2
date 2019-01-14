@@ -6,10 +6,9 @@ all_sources += files(
 
 subdir('direct3d')
 subdir('direct3d11')
-# MaxW: I can't find anything in CMakeLists.txt that causes this to be included
-#if host_machine.system() == 'darwin'
-#subdir('metal')
-#endif
+if cdata.get('SDL_VIDEO_RENDER_METAL', 0) == 1
+  subdir('metal')
+endif
 subdir('opengl')
 subdir('opengles')
 subdir('opengles2')
