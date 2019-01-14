@@ -3,6 +3,7 @@ if host_machine.system() == 'windows'
 #elif host_machine.system() == 'android'
 #  subdir('dlopen')
 else
+  subdir('dlopen')
   subdir('dummy')
 endif
 

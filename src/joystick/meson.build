@@ -5,6 +5,7 @@ all_sources += files(
 
 if host_machine.system() == 'linux'
   subdir('linux')
+  subdir('steam')
 elif host_machine.system() == 'windows'
   subdir('windows')
 elif host_machine.system() == 'darwin'
