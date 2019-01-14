@@ -14,7 +14,7 @@ cc = meson.get_compiler('c')
 core_deps = [
   cc.find_library('m',       required : false),
   cc.find_library('dl',      required : false),
-  cc.find_library('pthread', required : false),
+  cc.find_library('threads', required : false),
 ]
 
 if host_machine.system() == 'darwin'
@@ -228,7 +228,6 @@ if host_machine.system() == 'linux'
   cdata.set('SDL_SENSOR_DUMMY',                                 1)
   cdata.set('SDL_VIDEO_VULKAN',                                 1)
   # HAVE_VIDEO_VULKAN is set to TRUE in the CMake, but is never used
-  core_args += ['-pthread']
 elif host_machine.system() == 'windows'
   cdata.set('SDL_THREAD_WINDOWS',       1)
   cdata.set('SDL_JOYSTICK_DINPUT',      1)
@@ -241,7 +240,11 @@ elif host_machine.system() == 'windows'
   cdata.set('SDL_LOADSO_WINDOWS',       1)
   cdata.set('SDL_VIDEO_DRIVER_WINDOWS', 1)
   cdata.set('SDL_VIDEO_RENDER_D3D',     1)
+  cdata.set('SDL_AUDIO_DRIVER_WASAPI',  1)
+  cdata.set('SDL_AUDIO_DRIVER_DSOUND',  1)
   cdata.set('SDL_AUDIO_DRIVER_WINMM',   1)
+  cdata.set('SDL_AUDIO_DRIVER_DISK',    1)
+  cdata.set('SDL_AUDIO_DRIVER_DUMMY',   1)
   cdata.set('SDL_SENSOR_DUMMY',         1)
   cdata.set('SDL_VIDEO_OPENGL_WGL',     1)
   cdata.set('SDL_VIDEO_VULKAN',         1)
@@ -265,7 +268,6 @@ elif host_machine.system() == 'darwin'
   cdata.set('SDL_AUDIO_DRIVER_COREAUDIO',      1)
   cdata.set('SDL_VIDEO_OPENGL_CGL',            1)
   cdata.set('SDL_SENSOR_DUMMY',                1)
-  core_args += ['-pthread']
   core_deps += [
     dependency('CoreFoundation', method : 'extraframework'),
     dependency('Foundation',     method : 'extraframework'),
